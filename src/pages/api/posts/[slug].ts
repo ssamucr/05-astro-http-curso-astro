@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { getEntry, getCollection } from "astro:content";
+import { collections } from "../../../content.config";
 
 export const prerender = false;
 
@@ -24,6 +25,38 @@ export const GET: APIRoute = async ({ params, request }) => {
 
     return new Response(JSON.stringify({ error: "Slug not provided" }), {
         status: 400,
+        headers: { "Content-Type": "application/json" },
+    });
+};
+
+export const POST: APIRoute = async ({ params, request }) => {
+
+    const body = await request.json();
+
+    console.log("Received POST request with body:", body);
+
+    return new Response(JSON.stringify({ method: "POST", ...body }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+    });
+};
+
+export const PUT: APIRoute = async ({ params, request }) => {
+    const body = await request.json();
+
+    console.log("Received PUT request with body:", body);
+
+    return new Response(JSON.stringify({ method: "PUT", ...body }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+    });
+};
+
+export const DELETE: APIRoute = async ({ params, request }) => {
+    const body = await request.json();
+    console.log("Received DELETE request with body:", body);
+    return new Response(JSON.stringify({ method: "DELETE", ...body }), {
+        status: 200,
         headers: { "Content-Type": "application/json" },
     });
 };
