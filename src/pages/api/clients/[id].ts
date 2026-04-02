@@ -1,20 +1,26 @@
 import type { APIRoute } from "astro";
+import { Clients, db, eq } from "astro:db";
 
 export const prerender = false;
 
 export const GET: APIRoute = async ( {params} ) => {
-    // TODO
     const { id } = params;
-    return new Response(JSON.stringify({ method: "GET", id }), {
+
+    const client = await db.select().from(Clients).where(eq(Clients.id, Number(id))).get();
+
+    return new Response(JSON.stringify(client), {
         status: 200,
         headers: { "Content-Type": "application/json" },
     });
 }
 
 export const PUT: APIRoute = async ( {params, request } ) => {
-    // TODO
     const { id } = params;
+    
     const body = await request.json();
+
+    await db.update(Clients).set(body).where(eq(Clients.id, Number(id)));
+
     return new Response(JSON.stringify({ method: "PUT", id, body }), {
         status: 200,
         headers: { "Content-Type": "application/json" },
@@ -22,18 +28,20 @@ export const PUT: APIRoute = async ( {params, request } ) => {
 }
 
 export const DELETE: APIRoute = async ( {params} ) => {
-    // TODO
     const { id } = params;
-    return new Response(JSON.stringify({ method: "DELETE", id }), {
+
+    await db.delete(Clients).where(eq(Clients.id, Number(id)));
+
+    return new Response(JSON.stringify({msg: `Client with id ${id} deleted` }), {
         status: 200,
         headers: { "Content-Type": "application/json" },
     });
 }
 
 export const PATCH: APIRoute = async ( {params, request } ) => {
-    // TODO
     const { id } = params;
     const body = await request.json();
+    await db.update(Clients).set(body).where(eq(Clients.id, Number(id)));
     return new Response(JSON.stringify({ method: "PATCH", id, body }), {
         status: 200,
         headers: { "Content-Type": "application/json" },
