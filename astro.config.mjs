@@ -6,24 +6,30 @@ import { defineConfig } from 'astro/config';
 
 import cloudflare from '@astrojs/cloudflare';
 
+import db from '@astrojs/db';
+
 // import node from '@astrojs/node';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://example.com',
-  integrations: [mdx(), sitemap()],
+  integrations: [mdx(), sitemap(), db()],
 
   // adapter: node({
   //   mode: 'standalone',
   // }),
-  output: 'static'
+  output: 'static',
   /*
-  si pongo el output en server todo se renderiza del lado del servidor por defecto y para que algo se genere estatico necesito
-  export const prerender = true;
-
-  si pongo el output en static todo se renderiza del lado del cliente por defecto y para que algo se genere del lado del servidor necesito
-  export const prerender = false;
-  */,
+  IMPORTANTE: @astrojs/db REQUIERE output: 'server' o 'hybrid'. NO funciona con 'static'.
+  
+  Con output: 'server':
+  - Todo se renderiza del lado del servidor por defecto
+  - Para páginas estáticas: export const prerender = true;
+  
+  Con output: 'hybrid':
+  - Todo es estático por defecto
+  - Para renderizado del servidor: export const prerender = false;
+  */
 
   adapter: cloudflare(),
 });
