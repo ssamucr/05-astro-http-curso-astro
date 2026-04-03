@@ -32,4 +32,10 @@ export default defineConfig({
   */
 
   adapter: cloudflare(),
+  
+  vite: {
+    ssr: {
+      external: ['cssesc'],
+    },
+  },
 });
