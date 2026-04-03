@@ -30,7 +30,6 @@ export default defineConfig({
   - Todo es estático por defecto
   - Para renderizado del servidor: export const prerender = false;
   */
-
   adapter: cloudflare(),
   
   vite: {
