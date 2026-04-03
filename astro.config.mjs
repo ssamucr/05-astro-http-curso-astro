@@ -19,18 +19,6 @@ export default defineConfig({
   //   mode: 'standalone',
   // }),
   output: 'static',
-  /*
-  IMPORTANTE: @astrojs/db REQUIERE output: 'server' o 'hybrid'. NO funciona con 'static'.
-  
-  Con output: 'server':
-  - Todo se renderiza del lado del servidor por defecto
-  - Para páginas estáticas: export const prerender = true;
-  
-  Con output: 'hybrid':
-  - Todo es estático por defecto
-  - Para renderizado del servidor: export const prerender = false;
-  */
- 
   adapter: cloudflare(),
   
   vite: {
